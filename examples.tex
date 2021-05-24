@@ -1,0 +1,351 @@
+\documentclass[a4paper]{ctexart}
+%\CTEXsetup[format={\Large\bfseries}]{section}
+%\everymath{\displaystyle}
+\usepackage{cleveref,float}
+\usepackage{geometry,bm}
+\usepackage{makecell,pifont,amsmath}
+\usepackage{multirow}
+\setcounter{MaxMatrixCols}{20}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\geometry{
+  left=17mm,
+  right=17mm,
+  top=17mm, 
+  bottom=17mm,
+}
+\usepackage{subfigure}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,      
+    urlcolor=black,
+    citecolor=black,
+}
+\usepackage{amsmath}
+\usepackage{ntheorem}
+\theorembodyfont{\songti}
+\newtheorem{example}{\hskip 2em 例}
+\newtheorem*{zm}{\hskip 2em 证明}
+\newtheorem*{sol}{\hskip 2em 解}
+\newtheorem*{tips}{\hskip 2em 注}
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+\fancyhf{}
+\fancyhead[RE]{} % 在偶数页的右侧显示章名，
+\fancyhead[LO]{} % 在奇数页的左侧显示小节名，
+\fancyhead[LE,RO]{~\thepage~} % 在偶数页的左侧，奇数页的右侧显示页码
+\fancyhead[CE]{近景摄影测量复习}		
+\fancyhead[CO]{近景摄影测量复习}	
+\renewcommand{\headrulewidth}{0.7pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+\title{近景摄影测量复习}
+\begin{document}
+\setcounter{page}{1}
+\pagestyle{plain}
+\section*{作业题}
+\begin{example}
+物方空间布置有20个控制点，请列出使用单像空间后方交会解算内、外方位元素以及畸变系数的误差方程式，指出误差方程式、未知数、多余观测数的个数。其中畸变差模型为
+$$
+\begin{cases}
+	\Delta x=\left( x-x_0 \right) \left[ r^2k_1+r^4k_2 \right]\\
+	\Delta y=\left( y-y_0 \right) \left[ r^2k_1+r^4k_2 \right]\\
+\end{cases}
+$$
+\end{example}
+\begin{sol}
+误差方程式为
+$$
+\boldsymbol{V}=\boldsymbol{At}+\boldsymbol{CX}_2+\boldsymbol{DX}_{ad}-\boldsymbol{L}
+$$
+其中，
+$$
+\boldsymbol{V}=\left[ \begin{matrix}
+	v_x&		v_y\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{A}=\left[ \begin{matrix}
+	a_{11}&		a_{12}&		a_{13}&		a_{14}&		a_{15}&		a_{16}\\
+	a_{21}&		a_{22}&		a_{23}&		a_{24}&		a_{25}&		a_{26}\\
+\end{matrix} \right] 
+$$
+$$
+\boldsymbol{t}=\left[ \begin{matrix}
+	\Delta X_S&		\Delta Y_S&		\Delta Z_S&		\Delta \varphi&		\Delta \omega&		\Delta \kappa\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{C}=\left[ \begin{matrix}
+	a_{17}&		a_{18}&		a_{19}\\
+	a_{27}&		a_{28}&		a_{29}\\
+\end{matrix} \right] 
+$$
+$$
+\boldsymbol{D}=\left[ \begin{matrix}
+	\left( x-x_0 \right) r^2&		\left( x-x_0 \right) r^4\\
+	\left( y-y_0 \right) r^2&		\left( y-y_0 \right) r^4\\
+\end{matrix} \right] 
+$$
+$$
+\boldsymbol{X}_{ad}=\left[ \begin{matrix}
+	k_1&		k_2\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{L}=\left[ \begin{matrix}
+	x-\left( x \right)&		y-\left( y \right)\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+
+误差方程式的个数：40 个
+
+未知数：$3+6+2=11$ 个
+
+多余观测数：$40-11=29$ 个
+\end{sol}
+\begin{tips}
+对于 $\bm{D}$，要保证 $\bm{DX}_{ad}$ 乘出来是畸变差模型的那几项就可以了。
+\end{tips}
+\newpage
+\begin{example}
+物方空间布置有 10 个控制点，列出解求 $l_i$ 系数精确解及畸变系数 $k_1$、$k_2$ 的误差方程式。其中畸变差模型为
+$$
+\begin{cases}
+	\Delta x=\left( x-x_0 \right) \left[ r^2k_1+r^4k_2 \right]\\
+	\Delta y=\left( y-y_0 \right) \left[ r^2k_1+r^4k_2 \right]\\
+\end{cases}
+$$
+\end{example}
+\begin{sol}
+当有多余观测值，当像点坐标观测值改正数为 $(v_x,v_y)$，像点坐标的非线性改正为 $(\Delta x,\Delta y)$，直接线性变换取如下形式：
+$$
+\begin{cases}
+	\left( x+v_x \right) +\Delta x+\frac{l_1X+l_2Y+l_3Z+l_4}{l_9X+l_{10}Y+l_{11}Z+1}=0\\
+	\left( y+v_y \right) +\Delta y+\frac{l_5X+l_6Y+l_7Z+l_8}{l_9X+l_{10}Y+l_{11}Z+1}=0\\
+\end{cases}
+$$
+
+记 $A=l_9X+l_{10}Y+l_{11}Z+1$，代入像点坐标的非线性改正得到
+$$
+\begin{cases}
+	A\left( x+v_x \right) +A\left( x-x_0 \right) \left[ r^2k_1+r^4k_2 \right] +l_1X+l_2Y+l_3Z+l_4=0\\
+	A\left( y+v_y \right) +A\left( y-y_0 \right) \left[ r^2k_1+r^4k_2 \right] +l_5X+l_6Y+l_7Z+l_8=0\\
+\end{cases}
+$$
+整理得到 
+$$
+\begin{cases}
+	v_x=-\frac{1}{A}\left[ A\left( x-x_0 \right) \left( r^2k_1+r^4k_2 \right) +l_1X+l_2Y+l_3Z+l_4+xXl_9+xYl_{10}+xZl_{11}+x \right]\\
+	v_y=-\frac{1}{A}\left[ A\left( y-y_0 \right) \left( r^2k_1+r^4k_2 \right) +l_5X+l_5Y+l_7Z+l_8+yXl_9+yYl_{10}+yZl_{11}+y \right]\\
+\end{cases}
+$$
+
+从而误差方程为
+$$
+\bm{V=ML-W}
+$$
+其中，
+$$
+\boldsymbol{V}=\left[ \begin{matrix}
+	v_x&		v_y\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{M}=-\left[ \begin{matrix}
+	\frac{X}{A}&		\frac{Y}{A}&		\frac{Z}{A}&		\frac{1}{A}&		0&		0&		0&		0&		\frac{xX}{A}&		\frac{xY}{A}&		\frac{xZ}{A}&		\left( x-x_0 \right) r^2&		\left( x-x_0 \right) r^4\\
+	0&		0&		0&		0&		\frac{X}{A}&		\frac{Y}{A}&		\frac{Z}{A}&		\frac{1}{A}&		\frac{xX}{A}&		\frac{xY}{A}&		\frac{xZ}{A}&		\left( x-x_0 \right) r^2&		\left( x-x_0 \right) r^4\\
+\end{matrix} \right] 
+$$
+$$
+\boldsymbol{L}=\left[ \begin{matrix}
+	l_1&		l_2&		l_3&		l_4&		l_5&		l_6&		l_7&		l_8&		l_9&		l_{10}&		l_{11}&		k_1&		k_2\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{W}=\left[ \begin{matrix}
+	-\frac{x}{A}&		-\frac{y}{A}\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+\end{sol}
+\begin{tips}
+1. 若只需要求解 $k_1$，则只代入含 $k_1$ 的非线性改正项即可。
+
+2. 观测值：像点坐标（20 个）
+
+未知数：DLT 参数、畸变系数（$11+2=13$ 个）
+\end{tips}
+\newpage
+\section*{真题}
+\begin{example}
+使用 Kodak Professional DCS Pro SLR/n 型数码相机对某目标物摄影，该目标物在摄影方向的纵深为 2.5m，镜头焦距为 50mm，安置的光圈号数为 11，若取模糊圈直径为 20mm，相机调焦在目标物的中心，距离为 4m，请计算超焦距，并判断能否获得清晰影像。
+\end{example}
+\begin{sol}
+超焦距 
+$$
+H=\frac{F^2}{k\cdot E}=\frac{50^2}{11\cdot 20}=11.4\mathrm{mm}
+$$
+
+调焦距 $D=4$m
+
+前景深
+$$
+D_1=\frac{H\cdot D}{H+D}=\frac{11.4\times 4000}{11.4+4000}=11.37\text{mm}
+$$
+
+后景深
+$$
+D_2=\frac{H\cdot D}{H-D}=\frac{11.4\times 4000}{11.4-4000}=-11.43\text{mm}
+$$
+
+后景深为负数，说明能获得清晰影像的范围只有 $0\sim 11.37$mm，故不能获得清晰影像
+\end{sol}
+\begin{example}
+由两台 Hasselblad 555ELD 型数码相机组成的立体摄影测量系统，使用 40mm 镜头，两相机间的距离为 1.5m，现对某试验模型按正直摄影方式拍摄立体影像对，同名点的影像坐标按单片方式量测，量测精度为 $\pm$2 像素，像素大小为 7.07 mm，若要求摄影方向的测量精度优于 $\pm$3.0mm，请估算最长摄影距离应设置为多少？
+\end{example}
+\begin{sol}
+$m_x=\pm 2\times 7.07=14.14$mm
+
+$m_Z=\pm \sqrt{2}\cdot \dfrac{H^2}{f\cdot B}m_x=\pm \dfrac{14.14\sqrt{2}}{40\times 1500}H^2=\pm 3\mathrm{mm}$，从而 $H=\sqrt{\dfrac{3\times 40\times 1500}{14.14\times \sqrt{2}}}=94.9\text{mm}=9.49\text{cm}$
+\end{sol}
+\begin{example}
+\label{ex3}
+就共线条件方程，回答下列问题
+
+（1）写出以像点坐标为观测值的误差方程一般式，并写出各符号所代表的含义
+
+（2）为测量某矿体模型的变形情况，在其表面贴敷215个标志点作为变形监测点，另外在边框上布置 20 个分布合理的标志点用全站仪测量其三维坐标作为控制点。使用数码相机在 9 个摄站对矿体模型摄影（不调焦），重叠度为100\%。若物方控制点坐标作为真值，实地不测外方位元素，列出以内、外方位元素及待定点物方坐标为未知数的光束法平差的误差方程式。指出哪类参数是观测值？误差方程式的个数是多少？多余观测数是多少？
+
+（3）什么是近景摄影测量的光线束法平差？与空间后方交会-前方交会解法的区别是什么？
+\end{example}
+\begin{sol}
+（1）\begin{align*}
+\left[ \begin{array}{c}
+	v_x\\
+	v_y\\
+\end{array} \right] =&\left[ \begin{matrix}
+	\frac{\partial x}{\partial X_S}&		\frac{\partial x}{\partial Y_S}&		\frac{\partial x}{\partial Z_S}&		\frac{\partial x}{\partial \varphi}&		\frac{\partial x}{\partial \omega}&		\frac{\partial x}{\partial \kappa}\\
+	\frac{\partial y}{\partial X_S}&		\frac{\partial y}{\partial Y_S}&		\frac{\partial y}{\partial Z_S}&		\frac{\partial y}{\partial \varphi}&		\frac{\partial y}{\partial \omega}&		\frac{\partial y}{\partial \kappa}\\
+\end{matrix} \right] \left[ \begin{array}{c}
+	\Delta X_S\\
+	\Delta Y_S\\
+	\Delta Z_S\\
+	\Delta \varphi\\
+	\Delta \omega\\
+	\Delta \kappa\\
+\end{array} \right] +\left[ \begin{matrix}
+	\frac{\partial x}{\partial X}&		\frac{\partial x}{\partial Y}&		\frac{\partial x}{\partial Z}\\
+	\frac{\partial y}{\partial X}&		\frac{\partial y}{\partial Y}&		\frac{\partial y}{\partial Z}\\
+\end{matrix} \right] \left[ \begin{array}{c}
+	\Delta X\\
+	\Delta Y\\
+	\Delta Z\\
+\end{array} \right] \\
+&+\left[ \begin{matrix}
+	\frac{\partial x}{\partial f}&		\frac{\partial x}{\partial x_0}&		\frac{\partial x}{\partial y_0}\\
+	\frac{\partial y}{\partial f}&		\frac{\partial y}{\partial x_0}&		\frac{\partial y}{\partial y_0}\\
+\end{matrix} \right] \left[ \begin{array}{c}
+	\Delta f\\
+	\Delta x_0\\
+	\Delta y_0\\
+\end{array} \right] -\left[ \begin{array}{c}
+	x-\left( x \right)\\
+	y-\left( y \right)\\
+\end{array} \right] 
+\end{align*}
+其中，$v_x$、$v_y$ 为像点坐标改正数，$(x,y)$ 为像点坐标观测值，$(X,Y,Z)$ 为控制点的物方空间坐标，$(X_S,Y_S,Z_S,\varphi,\omega,\kappa)$ 为外方位元素，$(\Delta X_S,\Delta Y_S,\Delta Z_S,\Delta \varphi,\Delta \omega,\Delta \kappa)$ 为外方位元素改正数，$(x_0,y_0,f)$ 为内方位元素，$(\Delta x_0,\Delta y_0,\Delta f)$ 为内方位元素改正数，$(x)$、$(y)$ 是前一次迭代运算结果近似值。
+
+（2）$$
+\begin{cases}
+	\boldsymbol{V}_c=\boldsymbol{A}_c\boldsymbol{t}+\boldsymbol{C}_c\boldsymbol{X}_2+\boldsymbol{D}_c\boldsymbol{X}_{ad}-\boldsymbol{L}_c\,\,, \boldsymbol{P}_c\\
+	\boldsymbol{V}_u=\boldsymbol{A}_u\boldsymbol{t}+\boldsymbol{B}_u\boldsymbol{X}_u+\boldsymbol{C}_u\boldsymbol{X}_2+\boldsymbol{D}_u\boldsymbol{X}_{ad}-\boldsymbol{L}_u\,\,, \boldsymbol{P}_u\\
+\end{cases}
+$$
+
+观测值：待定点像点坐标，控制点像点坐标
+
+误差方程式的个数：$9\times (20\times 2+215\times 2)=4230$（9 张像片，每个点 2 个误差方程）
+
+必要观测数：$215\times 3+9\times 6+3\times 9=726$
+
+多余观测数：$4230-702=3504$
+
+（3）把控制点的像点坐标、待定点的像点坐标以 至其它内外业量测数据的一部分或全部均视作观 测值，按共线条件方程整体地、同时地解算它们的最或是值和待定点的物方空间坐标的解算方法。
+
+与空间后交—前交的区别：\ding{172}空间后方交会-空间前方交会解法分步解求，光线束法为整体解算；\ding{173}空间后交—前交解法中待定点的像点坐标对外方位元素的确定不起作用；光线束法中，待定点的像点坐标对外方位元素的确定有很大影响。
+\end{sol}
+\begin{example}
+就直接线性变换解法，回答下列问题
+
+（1）写出三维直接线性变换解法的基本关系式，指出各符号的含义。
+
+（2）条件同例 \ref{ex3}，列出计算第 5 张影像的 $l_i$ 系数精确值的误差方程式。畸变差模型取
+$$
+\begin{cases}
+	\Delta x=\left( x-x_0 \right) \left[ r^2k_1+r^4k_2 \right]\\
+	\Delta y=\left( y-y_0 \right) \left[ r^2k_1+r^4k_2 \right]\\
+\end{cases}
+$$
+\end{example}
+\begin{sol}
+（1）$$
+\begin{cases}
+	x+\frac{l_1X+l_2Y+l_3Z+l_4}{l_9X+l_{10}Y+l_{11}Z+1}=0\\
+	y+\frac{l_5X+l_6Y+l_7Z+l_8}{l_9X+l_{10}Y+l_{11}Z+1}=0\\
+\end{cases}
+$$
+其中，$l_i$ 为直接线性变换系数，$(x,y)$ 为像点坐标，$(X,Y,Z)$ 为物方空间坐标。
+
+（2）当有多余观测值，当像点坐标观测值改正数为 $(v_x,v_y)$，像点坐标的非线性改正为 $(\Delta x,\Delta y)$，直接线性变换取如下形式：
+$$
+\begin{cases}
+	\left( x+v_x \right) +\Delta x+\frac{l_1X+l_2Y+l_3Z+l_4}{l_9X+l_{10}Y+l_{11}Z+1}=0\\
+	\left( y+v_y \right) +\Delta y+\frac{l_5X+l_6Y+l_7Z+l_8}{l_9X+l_{10}Y+l_{11}Z+1}=0\\
+\end{cases}
+$$
+
+记 $A=l_9X+l_{10}Y+l_{11}Z+1$，代入像点坐标的非线性改正得到
+$$
+\begin{cases}
+	A\left( x+v_x \right) +A\left( x-x_0 \right) \left[ r^2k_1+r^4k_2 \right] +l_1X+l_2Y+l_3Z+l_4=0\\
+	A\left( y+v_y \right) +A\left( y-y_0 \right) \left[ r^2k_1+r^4k_2 \right] +l_5X+l_6Y+l_7Z+l_8=0\\
+\end{cases}
+$$
+整理得到 
+$$
+\begin{cases}
+	v_x=-\frac{1}{A}\left[ A\left( x-x_0 \right) \left( r^2k_1+r^4k_2 \right) +l_1X+l_2Y+l_3Z+l_4+xXl_9+xYl_{10}+xZl_{11}+x \right]\\
+	v_y=-\frac{1}{A}\left[ A\left( y-y_0 \right) \left( r^2k_1+r^4k_2 \right) +l_5X+l_5Y+l_7Z+l_8+yXl_9+yYl_{10}+yZl_{11}+y \right]\\
+\end{cases}
+$$
+
+从而误差方程为
+$$
+\bm{V=ML-W}
+$$
+其中，
+$$
+\boldsymbol{V}=\left[ \begin{matrix}
+	v_x&		v_y\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{M}=-\left[ \begin{matrix}
+	\frac{X}{A}&		\frac{Y}{A}&		\frac{Z}{A}&		\frac{1}{A}&		0&		0&		0&		0&		\frac{xX}{A}&		\frac{xY}{A}&		\frac{xZ}{A}&		\left( x-x_0 \right) r^2&		\left( x-x_0 \right) r^4\\
+	0&		0&		0&		0&		\frac{X}{A}&		\frac{Y}{A}&		\frac{Z}{A}&		\frac{1}{A}&		\frac{xX}{A}&		\frac{xY}{A}&		\frac{xZ}{A}&		\left( x-x_0 \right) r^2&		\left( x-x_0 \right) r^4\\
+\end{matrix} \right] 
+$$
+$$
+\boldsymbol{L}=\left[ \begin{matrix}
+	l_1&		l_2&		l_3&		l_4&		l_5&		l_6&		l_7&		l_8&		l_9&		l_{10}&		l_{11}&		k_1&		k_2\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+$$
+\boldsymbol{W}=\left[ \begin{matrix}
+	-\frac{x}{A}&		-\frac{y}{A}\\
+\end{matrix} \right] ^{\mathrm{T}}
+$$
+\end{sol}
+\end{document}
